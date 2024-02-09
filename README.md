@@ -24,10 +24,9 @@ Specialized unmanned vehicles project
 5.	获得git push权限
 ——终端输入：
 	<git remote rm origin> #删除原本地仓库HTTP链接方式
-	<git remote add origin git@github.com:KaiLiu20240205/Specialized_Vehicle_2024.git
-> #建立本地仓库与github仓库之间的连接
+	<git remote add origin git@github.com:KaiLiu20240205/Specialized_Vehicle_2024.git> #建立本地仓库与github仓库之间的连接
 	<ssh-keygen -t rsa -C "xxx@xxx.com"> #然后一直回车
-<cat id_rsa.pub> #复制cat的结果发给我即可
+	<cat id_rsa.pub> #复制cat的结果发给我即可
 
 6.	仓库迭代（只迭代负责部分即可）
 ——终端输入：
