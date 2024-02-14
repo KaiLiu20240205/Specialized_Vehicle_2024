@@ -1,0 +1,13 @@
+-I/home/kai/catkin_ws/src/calibration_camera_lidar/ls_calibration/rosinterface/include
+-I/opt/ros/melodic/include
+-I/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp
+-I/usr/include
+-I/home/kai/catkin_ws/src/calibration_camera_lidar/ls_calibration/rosinterface
+-I/home/kai/catkin_ws/build/calibration_camera_lidar/ls_calibration/rosinterface
+-DROS_BUILD_SHARED_LIBS=1
+-DROS_BUILD_SHARED_LIBS=1
+-DROS_PACKAGE_NAME="rosinterface"
+-DROSCONSOLE_BACKEND_LOG4CXX
+-o
+/home/kai/catkin_ws/build/calibration_camera_lidar/ls_calibration/rosinterface/include/rosinterface/moc_rosinterface.cpp
+/home/kai/catkin_ws/src/calibration_camera_lidar/ls_calibration/rosinterface/include/rosinterface/rosinterface.h
