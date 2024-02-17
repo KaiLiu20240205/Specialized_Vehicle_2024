@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/testopt.dir/testfuncs.c.o CMakeFiles/testopt.dir/testopt.c.o CMakeFiles/testopt.dir/__/src/util/timer.c.o CMakeFiles/testopt.dir/__/src/util/mt19937ar.c.o -o testopt  -Wl,-rpath,/home/kai/nlopt-master/build ../libnlopt.so.0.11.1 -lm 

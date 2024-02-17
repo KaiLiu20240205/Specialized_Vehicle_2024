@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/t_tutorial.dir/t_tutorial.cxx.o -o t_tutorial  -Wl,-rpath,/home/kai/nlopt-master/build ../libnlopt.so.0.11.1 -lm 
