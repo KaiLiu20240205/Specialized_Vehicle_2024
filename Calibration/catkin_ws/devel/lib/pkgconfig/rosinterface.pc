@@ -1,8 +1,0 @@
-prefix=/home/kai/catkin_ws/devel
-
-Name: rosinterface
-Description: Description of rosinterface
-Version: 1.9.1
-Cflags: -I/home/kai/catkin_ws/src/calibration_camera_lidar/ls_calibration/rosinterface/include
-Libs: -L${prefix}/lib -lrosinterface
-Requires: roscpp tf

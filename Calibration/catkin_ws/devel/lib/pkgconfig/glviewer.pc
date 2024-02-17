@@ -1,8 +1,0 @@
-prefix=/home/kai/catkin_ws/devel
-
-Name: glviewer
-Description: Description of glviewer
-Version: 1.9.1
-Cflags: -I/home/kai/catkin_ws/src/calibration_camera_lidar/ls_calibration/glviewer/include
-Libs: -L${prefix}/lib -lglviewer
-Requires: roscpp
