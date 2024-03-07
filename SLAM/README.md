@@ -1,5 +1,10 @@
 # Specialized_Vehicle_2024
 
+#### 1.初始化工作空间 <https://blog.csdn.net/qq_43961980/article/details/104416581>
+
+
+
+
 #### 1.Github注册——URL <https://github.com>
 
 #### 2.Github安装
