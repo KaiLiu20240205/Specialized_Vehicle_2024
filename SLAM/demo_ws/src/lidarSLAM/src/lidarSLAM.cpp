@@ -26,8 +26,9 @@ void callback(const sensor_msgs::PointCloud2ConstPtr & in_cloud_ptr)
     ROS_INFO("time = %fms",total_time);
 }
 
-void 
-cloud_cb (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
+ros::Publisher pub; 
+
+void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
 {
     auto t1 = std::chrono::high_resolution_clock::now();
     // Container for original & filtered data
@@ -50,7 +51,15 @@ cloud_cb (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
 
     auto t2 = std::chrono::high_resolution_clock::now();
     double total_time = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1).count() * 1000;
-    ROS_INFO("time = %fms,%f",total_time,pcl_cloud->points[0].x);
+    ROS_INFO("time = %fms",total_time);
+
+    // Convert to ROS data type
+    sensor_msgs::PointCloud2 output;
+    pcl_conversions::fromPCL(*cloud, output);
+    output.header.frame_id = "vehicle_link";
+    // Publish the data
+    pub.publish (output);
+
 }
 
 int
@@ -62,6 +71,9 @@ main (int argc, char** argv)
 
   // Create a ROS subscriber for the input point cloud
   ros::Subscriber sub = nh.subscribe<sensor_msgs::PointCloud2> ("/sensor/lidar16/top/pointcloud", 1, cloud_cb);
+
+  // Create a ROS publisher for the output point cloud
+  pub = nh.advertise<sensor_msgs::PointCloud2> ("filtered_points", 1);
 
   // Spin
   ros::spin ();
