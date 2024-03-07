@@ -1,2 +1,2 @@
-topic_demo
+lidarSLAM:topic_demo
 -DCATKIN_DEVEL_PREFIX=/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel -DCMAKE_INSTALL_PREFIX=/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/install -G Unix Makefiles

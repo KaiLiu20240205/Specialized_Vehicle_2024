@@ -1,0 +1,8 @@
+prefix=/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel
+
+Name: lidarSLAM
+Description: Description of lidarSLAM
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
