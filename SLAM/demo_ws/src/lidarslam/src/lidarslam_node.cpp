@@ -17,19 +17,22 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
     // Convert to ROS data type
     sensor_msgs::PointCloud2 output;
     pcl_conversions::fromPCL(*cloud_filtered, output);
-    //pcl::toROSMsg(*pcl_cloud, output);
     output.header.frame_id = "vehicle_link";
     // Publish the data
     pub.publish (output);
 
     // 将PCL的PointCloud2转化为PCL的PointXYZI
     pcl::PointCloud<pcl::PointXYZI>::Ptr pcl_cloud(new pcl::PointCloud<pcl::PointXYZI>);
+    pcl::PointCloud<pcl::PointXYZI>::Ptr pcl_cloud_dense(new pcl::PointCloud<pcl::PointXYZI>);
     pcl::fromPCLPointCloud2(*cloud_filtered, *pcl_cloud);
+    
+    std::vector<int> indices;
+    pcl::removeNaNFromPointCloud(*pcl_cloud, *pcl_cloud_dense, indices);
 
     //建立KDtree
     KDtree cloud1;
-    cloud1.BuildTree(pcl_cloud);
-
+    cloud1.BuildTree(pcl_cloud_dense);
+    
 
     auto t2 = std::chrono::high_resolution_clock::now();
     total_time += std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1).count() * 1000;

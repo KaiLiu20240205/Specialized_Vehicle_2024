@@ -68,6 +68,11 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "bit": "cpp",
-        "eigen": "cpp"
+        "eigen": "cpp",
+        "queue": "cpp",
+        "csignal": "cpp",
+        "codecvt": "cpp",
+        "future": "cpp",
+        "valarray": "cpp"
     }
 }
