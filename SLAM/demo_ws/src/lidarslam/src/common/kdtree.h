@@ -7,7 +7,7 @@
 
 class KdTreeNode {
     int id_ = -1;
-    int point_idx_ = 0;            // 点的索引
+    int point_idx_ = -1;            // 点的索引
     int axis_index_ = 0;           // 分割轴
     float split_thresh_ = 0.0;     // 分割位置
     KdTreeNode* left_ = nullptr;   // 左子树

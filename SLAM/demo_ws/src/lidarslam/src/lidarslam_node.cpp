@@ -14,6 +14,14 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
     //sensor_msgs的PointCloud2转化为PCL的PointCloud2并体素滤波
     pcl::PCLPointCloud2::Ptr cloud_filtered = VoxelGrid_fromROSmsgs(cloud_msg);
 
+    // Convert to ROS data type
+    sensor_msgs::PointCloud2 output;
+    pcl_conversions::fromPCL(*cloud_filtered, output);
+    //pcl::toROSMsg(*pcl_cloud, output);
+    output.header.frame_id = "vehicle_link";
+    // Publish the data
+    pub.publish (output);
+
     // 将PCL的PointCloud2转化为PCL的PointXYZI
     pcl::PointCloud<pcl::PointXYZI>::Ptr pcl_cloud(new pcl::PointCloud<pcl::PointXYZI>);
     pcl::fromPCLPointCloud2(*cloud_filtered, *pcl_cloud);
@@ -28,13 +36,6 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
     total_times++;
     ROS_INFO("average time = %fms",total_time/total_times);
 
-    // Convert to ROS data type
-    sensor_msgs::PointCloud2 output;
-    //pcl_conversions::fromPCL(*cloud_filtered, output);
-    pcl::toROSMsg(*pcl_cloud, output);
-    output.header.frame_id = "vehicle_link";
-    // Publish the data
-    pub.publish (output);
     
 }
 
