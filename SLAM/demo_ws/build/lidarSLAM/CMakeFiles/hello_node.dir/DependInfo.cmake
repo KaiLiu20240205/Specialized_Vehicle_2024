@@ -23,6 +23,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/pcl-1.10"
   "/usr/include/vtk-7.1"
   "/usr/include/freetype2"
+  "/usr/include/x86_64-linux-gnu/common"
   )
 
 # Targets to which this target links.

@@ -5,7 +5,9 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/opt/ros/noetic/**",
-                "/usr/include/**"
+                "/usr/include/**",
+                "/usr/include/pcl-1.10",
+                "/opt/ros/noetic/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
