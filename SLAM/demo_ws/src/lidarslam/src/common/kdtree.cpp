@@ -17,7 +17,6 @@ bool KDtree::BuildTree(const pcl::PointCloud<pcl::PointXYZI>::Ptr& cloud)
     for (int i = 0; i < cloud->points.size(); ++i) {
         idx[i] = i;
     }
-    cloud->points[0].getArray3fMap();
     Insert(idx, root_.get());
     return true;
 }
@@ -39,24 +38,48 @@ void KDtree::Insert(const std::vector<int> &points, KdTreeNode *node)
     }
 
     if (points.size() == 1) {
+        size_++;
         node->point_idx_ = points[0];
         return;
     }
 
     std::vector<int> left, right;
 
-    FindSplitAxisAndThresh(points, root_->axis_index_, root_->split_thresh_, left, right);
+    FindSplitAxisAndThresh(points, node->axis_index_, node->split_thresh_, left, right);
 
     const auto create_if_not_empty = [&node, this](KdTreeNode *&new_node, const std::vector<int> &index) {
         if (!index.empty()) {
             new_node = new KdTreeNode;
-            new_node->id_ = tree_node_id_++;
+            new_node->id_ = ++tree_node_id_;
             Insert(index, new_node);
         }
     };
 
     create_if_not_empty(node->left_, left);
     create_if_not_empty(node->right_, right);
+}
+
+bool KDtree::GetClosestPoint(const pcl::PointXYZI &pt, std::vector<int> &closest_idx, int k)
+{
+    if(k > size_){
+        ROS_INFO("cannot set k=%d larger than cloud size: %d",k,size_);
+        return false;
+    }
+    k_ = k;
+    std::priority_queue<NodeAndDistance> knn_result;
+    Knn(pt.getVector3fMap(), root_.get(), knn_result);
+
+    // 排序并返回结果
+    closest_idx.resize(knn_result.size());
+    for (int i = closest_idx.size() - 1; i >= 0; --i) {
+        // 倒序插入
+        closest_idx[i] = knn_result.top().node_->point_idx_;
+        knn_result.pop();
+        //ROS_INFO("get closestdis2 %f",knn_result.top().distance2_);
+    }
+    //ROS_INFO("get closestpoint %d\t%d\t%d\t%d\t%d",closest_idx[0],closest_idx[1],closest_idx[2],closest_idx[3],closest_idx[4]);
+    
+    return true;
 }
 
 void KDtree::FindSplitAxisAndThresh(const std::vector<int> &point_idx, int &axis, float &th, std::vector<int> &left, std::vector<int> &right)
@@ -74,10 +97,77 @@ void KDtree::FindSplitAxisAndThresh(const std::vector<int> &point_idx, int &axis
     for (const auto &idx : point_idx) {
         if (cloud_->points[idx].getVector3fMap()[axis] < th) {
             left.emplace_back(idx);
-        } else {
+        } 
+        else {
             right.emplace_back(idx);
         }
     }
 
     
+}
+
+void KDtree::Knn(const Eigen::Vector3f &pt, KdTreeNode *node, std::priority_queue<NodeAndDistance> &knn_result) const
+{
+    if (node->IsLeaf()) {
+        // 如果是叶子，检查叶子是否能插入
+        ComputeDisForLeaf(pt, node, knn_result);
+        return;
+    }
+
+    // 看pt落在左还是右，优先搜索pt所在的子树
+    // 然后再看另一侧子树是否需要搜索
+    KdTreeNode *this_side, *that_side;
+    if (pt[node->axis_index_] < node->split_thresh_) {
+        this_side = node->left_;
+        that_side = node->right_;
+    } else {
+        this_side = node->right_;
+        that_side = node->left_;
+    }
+
+    Knn(pt, this_side, knn_result);
+    if (NeedExpand(pt, node, knn_result)) {  // 注意这里是跟自己比
+        Knn(pt, that_side, knn_result);
+    }
+}
+
+void KDtree::ComputeDisForLeaf(const Eigen::Vector3f &pt, KdTreeNode *node, std::priority_queue<NodeAndDistance> &knn_result) const
+{
+    // 比较与结果队列的差异，如果优于最远距离，则插入
+    float dis2 = Dis2(pt, cloud_->points[node->point_idx_].getVector3fMap());
+    if (knn_result.size() < k_) {
+        // results 不足k
+        knn_result.emplace(node, dis2);
+    } else {
+        // results等于k，比较current与max_dis_iter之间的差异
+        if (dis2 < knn_result.top().distance2_) {
+            knn_result.emplace(node, dis2);
+            knn_result.pop();
+        }
+    }
+}
+
+bool KDtree::NeedExpand(const Eigen::Vector3f &pt, KdTreeNode *node, std::priority_queue<NodeAndDistance> &knn_result) const
+{
+    if (knn_result.size() < k_) {
+        return true;
+    }
+    // 检测切面距离，看是否有比现在更小的
+    float d = pt[node->axis_index_] - node->split_thresh_;
+    if ((d * d) < knn_result.top().distance2_) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void KDtree::PrintAll() {
+    for (const auto &np : nodes_) {
+        auto node = np.second;
+        if (node->left_ == nullptr && node->right_ == nullptr) {
+            std::cout << "leaf node: " << node->id_ << ", idx: " << node->point_idx_<<std::endl;
+        } else {
+            std::cout << "node: " << node->id_ << ", axis: " << node->axis_index_ << ", th: " << node->split_thresh_<<std::endl;
+        }
+    }
 }
