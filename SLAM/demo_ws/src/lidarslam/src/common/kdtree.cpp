@@ -1,6 +1,7 @@
 #include "kdtree.h"
-
-
+#include "point_cloud_utils.h"
+#include <execution>
+#include <vector>
 
 bool KDtree::BuildTree(const pcl::PointCloud<pcl::PointXYZI>::Ptr& cloud)
 {
@@ -9,8 +10,9 @@ bool KDtree::BuildTree(const pcl::PointCloud<pcl::PointXYZI>::Ptr& cloud)
         return false;
     }
     
-    root_.reset(new KdTreeNode()); //每次建树时创建一个新的根节点。
     Clear();                       //清理上一次建数的指针及其对象。
+    root_.reset(new KdTreeNode()); //每次建树时创建一个新的根节点。
+    
     cloud_ = cloud;
 
     std::vector<int> idx(cloud->size());
@@ -24,10 +26,13 @@ bool KDtree::BuildTree(const pcl::PointCloud<pcl::PointXYZI>::Ptr& cloud)
 void KDtree::Clear()
 {
     for (const auto &np : nodes_) {
-        if (np.second != root_.get()) {
+        if (np.second != root_.get() && np.second != nullptr) {
             delete np.second;
         }
     }
+    nodes_.clear();
+    size_ = 0;
+    tree_node_id_ = 0;
 }
 
 void KDtree::Insert(const std::vector<int> &points, KdTreeNode *node)
@@ -79,6 +84,60 @@ bool KDtree::GetClosestPoint(const pcl::PointXYZI &pt, std::vector<int> &closest
     }
     //ROS_INFO("get closestpoint %d\t%d\t%d\t%d\t%d",closest_idx[0],closest_idx[1],closest_idx[2],closest_idx[3],closest_idx[4]);
     
+    return true;
+}
+
+bool KDtree::GetClosestPointMT(const pcl::PointCloud<pcl::PointXYZI>::Ptr &cloud, std::vector<std::pair<size_t, size_t>> &matches, int k) {
+    
+    matches.resize(cloud->size() * k);
+
+    // 索引
+    std::vector<int> index(cloud->size());
+    for (int i = 0; i < cloud->points.size(); ++i) {
+        index[i] = i;
+    }
+
+    std::for_each(std::execution::par_unseq, index.begin(), index.end(), [this, &cloud, &matches, &k](int idx) {
+        std::vector<int> closest_idx;
+        GetClosestPoint(cloud->points[idx], closest_idx, k);
+        for (int i = 0; i < k; ++i) {
+            matches[idx * k + i].second = idx;
+            if (i < closest_idx.size()) {
+                matches[idx * k + i].first = closest_idx[i];
+            } else {
+                matches[idx * k + i].first = std::numeric_limits<size_t>::max();
+            }
+        }
+    });
+
+    return true;
+}
+
+bool KDtree::GetClosestPointPlaneMT(const pcl::PointCloud<pcl::PointXYZI>::Ptr &cloud, int k) {
+
+
+    // 索引
+    std::vector<int> index(cloud->size());
+    for (int i = 0; i < cloud->points.size(); ++i) {
+        index[i] = i;
+    }
+
+    std::for_each(std::execution::par_unseq, index.begin(), index.end(), [this, &cloud, &k](int idx) {
+        std::vector<int> closest_idx;
+        GetClosestPoint(cloud->points[idx], closest_idx, k);
+        std::vector<Eigen::Vector3f> points;
+        for (int i=0;i<k;i++){
+            points.emplace_back(cloud_->points[closest_idx[i]].getArray3fMap());
+        }
+        Eigen::Vector4f estimated_plane_coeffs;
+        if(FitPlane(points,estimated_plane_coeffs)){
+        } else {
+            std::cout<< "plane fitting failed"<<std::endl;
+        }
+
+
+    });
+
     return true;
 }
 

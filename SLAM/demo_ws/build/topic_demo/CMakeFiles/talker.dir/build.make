@@ -60,15 +60,15 @@ include topic_demo/CMakeFiles/talker.dir/flags.make
 topic_demo/CMakeFiles/talker.dir/src/talker.cpp.o: topic_demo/CMakeFiles/talker.dir/flags.make
 topic_demo/CMakeFiles/talker.dir/src/talker.cpp.o: /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/topic_demo/src/talker.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object topic_demo/CMakeFiles/talker.dir/src/talker.cpp.o"
-	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/topic_demo && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/talker.dir/src/talker.cpp.o -c /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/topic_demo/src/talker.cpp
+	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/topic_demo && /usr/bin/g++-9  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/talker.dir/src/talker.cpp.o -c /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/topic_demo/src/talker.cpp
 
 topic_demo/CMakeFiles/talker.dir/src/talker.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/talker.dir/src/talker.cpp.i"
-	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/topic_demo && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/topic_demo/src/talker.cpp > CMakeFiles/talker.dir/src/talker.cpp.i
+	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/topic_demo && /usr/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/topic_demo/src/talker.cpp > CMakeFiles/talker.dir/src/talker.cpp.i
 
 topic_demo/CMakeFiles/talker.dir/src/talker.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/talker.dir/src/talker.cpp.s"
-	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/topic_demo && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/topic_demo/src/talker.cpp -o CMakeFiles/talker.dir/src/talker.cpp.s
+	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/topic_demo && /usr/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/topic_demo/src/talker.cpp -o CMakeFiles/talker.dir/src/talker.cpp.s
 
 # Object files for target talker
 talker_OBJECTS = \

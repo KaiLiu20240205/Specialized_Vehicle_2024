@@ -1,11 +1,15 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(lidarslam)
 
-## Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++17)
+
+## Compile as C++11, supported 
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_BUILD_TYPE "Release")
 
+set(OpenCV_DIR /usr/local/share/OpenCV/)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -17,6 +21,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   std_msgs
+  OpenCV
 )
 
 ## System dependencies are found with CMake's conventions
@@ -163,12 +168,14 @@ target_link_libraries(point_cloud_utils
 )
 target_link_libraries(kdtree
   ${catkin_LIBRARIES}
+  tbb
 )
 
 target_link_libraries(${PROJECT_NAME}_node
   point_cloud_utils
   kdtree
   ${catkin_LIBRARIES}
+  ${OpenCV_LIBS}
 )
 
 

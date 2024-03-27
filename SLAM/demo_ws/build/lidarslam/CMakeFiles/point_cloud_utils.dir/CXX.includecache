@@ -21,6 +21,10 @@ pcl/point_types.h
 -
 pcl/filters/voxel_grid.h
 -
+Eigen/SVD
+-
+opencv2/core.hpp
+-
 
 /opt/ros/noetic/include/pcl_conversions/pcl_conversions.h
 vector

@@ -13,11 +13,13 @@ unordered_map
 -
 point_cloud_utils.h
 -
-numeric
+execution
 -
 queue
 -
 iostream
+-
+memory
 -
 
 /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/lidarslam/src/common/point_cloud_utils.h
@@ -30,6 +32,10 @@ pcl/point_cloud.h
 pcl/point_types.h
 -
 pcl/filters/voxel_grid.h
+-
+Eigen/SVD
+-
+opencv2/core.hpp
 -
 
 /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/lidarslam/src/lidarslam_node.cpp

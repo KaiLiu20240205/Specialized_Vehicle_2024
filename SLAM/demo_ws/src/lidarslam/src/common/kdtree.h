@@ -4,13 +4,14 @@
 #include <Eigen/Eigen>
 #include <unordered_map>
 #include <point_cloud_utils.h>
-#include <numeric>
-//#include "ros/ros.h"
+//#include <numeric>
+#include <execution>
 #include <queue>
 #include <iostream>
+#include <memory>
 
-
-struct KdTreeNode {
+class KdTreeNode {
+    public:
     int id_ = 0;                  //节点的索引
     int point_idx_ = -1;            // 点的索引
     int axis_index_ = 0;           // 分割轴
@@ -25,21 +26,24 @@ struct NodeAndDistance {
     NodeAndDistance(KdTreeNode* node, float dis2) : node_(node), distance2_(dis2) {}
     KdTreeNode* node_ = nullptr;
     float distance2_ = 0;  // 平方距离，用于比较
-
     bool operator<(const NodeAndDistance& other) const { return distance2_ < other.distance2_; }
 };
 
 class KDtree{
     public:
+    ~KDtree(){Clear();};
     bool BuildTree(const pcl::PointCloud<pcl::PointXYZI>::Ptr& cloud);// 建立KDtree  
     void Clear();   // 删除记录所有节点的指针
     void Insert(const std::vector<int>& points, KdTreeNode* node);
     bool GetClosestPoint(const pcl::PointXYZI& pt, std::vector<int>& closest_idx, int k = 5); // 获取k近邻
+    bool GetClosestPointMT(const pcl::PointCloud<pcl::PointXYZI>::Ptr &cloud, std::vector<std::pair<size_t, size_t>> &matches, int k = 5);
+    bool GetClosestPointPlaneMT(const pcl::PointCloud<pcl::PointXYZI>::Ptr &cloud, int k = 5);
     void PrintAll();
+    int GetSize(){return size_;};
 
-    private:
+private:
     int k_;                                         // k近邻搜索数量                
-    int size_;                                      // 叶子节点数量
+    int size_=0;                                      // 叶子节点数量
     std::shared_ptr<KdTreeNode> root_ = nullptr;    // 根节点,kdtree的第一个节点入口
     int tree_node_id_ = 0;  // 为kdtree node 分配id
     std::unordered_map<int, KdTreeNode*> nodes_;    // 记录所有节点

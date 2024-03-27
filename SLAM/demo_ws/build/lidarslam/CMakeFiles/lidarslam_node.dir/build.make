@@ -60,15 +60,15 @@ include lidarslam/CMakeFiles/lidarslam_node.dir/flags.make
 lidarslam/CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.o: lidarslam/CMakeFiles/lidarslam_node.dir/flags.make
 lidarslam/CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.o: /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/lidarslam/src/lidarslam_node.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object lidarslam/CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.o"
-	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/lidarslam && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.o -c /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/lidarslam/src/lidarslam_node.cpp
+	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/lidarslam && /usr/bin/g++-9  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.o -c /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/lidarslam/src/lidarslam_node.cpp
 
 lidarslam/CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.i"
-	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/lidarslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/lidarslam/src/lidarslam_node.cpp > CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.i
+	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/lidarslam && /usr/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/lidarslam/src/lidarslam_node.cpp > CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.i
 
 lidarslam/CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.s"
-	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/lidarslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/lidarslam/src/lidarslam_node.cpp -o CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.s
+	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/lidarslam && /usr/bin/g++-9 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/src/lidarslam/src/lidarslam_node.cpp -o CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.s
 
 # Object files for target lidarslam_node
 lidarslam_node_OBJECTS = \
@@ -197,6 +197,24 @@ lidarslam_node_EXTERNAL_OBJECTS =
 /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0
 /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.71.0
 /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_dnn.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_highgui.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_ml.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_objdetect.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_shape.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_stitching.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_superres.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_videostab.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_viz.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_calib3d.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_features2d.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_flann.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_photo.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_video.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_videoio.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_imgcodecs.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_imgproc.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_core.so.3.4.16
 /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: lidarslam/CMakeFiles/lidarslam_node.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node"
 	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build/lidarslam && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lidarslam_node.dir/link.txt --verbose=$(VERBOSE)
