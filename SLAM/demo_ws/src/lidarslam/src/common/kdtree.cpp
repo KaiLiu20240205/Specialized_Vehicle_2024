@@ -1,6 +1,5 @@
 #include "kdtree.h"
 #include "point_cloud_utils.h"
-#include <execution>
 #include <vector>
 
 bool KDtree::BuildTree(const pcl::PointCloud<pcl::PointXYZI>::Ptr& cloud)
@@ -50,7 +49,11 @@ void KDtree::Insert(const std::vector<int> &points, KdTreeNode *node)
 
     std::vector<int> left, right;
 
-    FindSplitAxisAndThresh(points, node->axis_index_, node->split_thresh_, left, right);
+    if (!FindSplitAxisAndThresh(points, node->axis_index_, node->split_thresh_, left, right)) {
+        size_++;
+        node->point_idx_ = points[0];
+        return;
+    }
 
     const auto create_if_not_empty = [&node, this](KdTreeNode *&new_node, const std::vector<int> &index) {
         if (!index.empty()) {
@@ -141,7 +144,7 @@ bool KDtree::GetClosestPointPlaneMT(const pcl::PointCloud<pcl::PointXYZI>::Ptr &
     return true;
 }
 
-void KDtree::FindSplitAxisAndThresh(const std::vector<int> &point_idx, int &axis, float &th, std::vector<int> &left, std::vector<int> &right)
+bool KDtree::FindSplitAxisAndThresh(const std::vector<int> &point_idx, int &axis, float &th, std::vector<int> &left, std::vector<int> &right)
 {
     Eigen::Vector3f var;
     Eigen::Vector3f mean;
@@ -162,6 +165,13 @@ void KDtree::FindSplitAxisAndThresh(const std::vector<int> &point_idx, int &axis
         }
     }
 
+    // 边界情况检查：输入的points等于同一个值，上面的判定是>=号，所以都进了右侧
+    // 这种情况不需要继续展开，直接将当前节点设为叶子就行
+    if (point_idx.size() > 1 && (left.empty() || right.empty())) {
+        return false;
+    }
+
+    return true;
     
 }
 

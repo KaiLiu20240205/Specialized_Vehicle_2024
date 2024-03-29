@@ -4,7 +4,7 @@
 #include <Eigen/Eigen>
 #include <unordered_map>
 #include <point_cloud_utils.h>
-//#include <numeric>
+#include <numeric>
 #include <execution>
 #include <queue>
 #include <iostream>
@@ -49,7 +49,7 @@ private:
     std::unordered_map<int, KdTreeNode*> nodes_;    // 记录所有节点
     pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_;
     static inline float Dis2(const Eigen::Vector3f& p1, const Eigen::Vector3f& p2) { return (p1 - p2).squaredNorm(); }
-    void FindSplitAxisAndThresh(const std::vector<int>& point_idx, int& axis, float& th, std::vector<int>& left, std::vector<int>& right);
+    bool FindSplitAxisAndThresh(const std::vector<int>& point_idx, int& axis, float& th, std::vector<int>& left, std::vector<int>& right);
     void Knn(const Eigen::Vector3f &pt, KdTreeNode *node, std::priority_queue<NodeAndDistance> &knn_result) const;
     void ComputeDisForLeaf(const Eigen::Vector3f &pt, KdTreeNode *node,std::priority_queue<NodeAndDistance> &knn_result) const;
     bool NeedExpand(const Eigen::Vector3f& pt, KdTreeNode* node, std::priority_queue<NodeAndDistance>& knn_result) const;

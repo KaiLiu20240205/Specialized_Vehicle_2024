@@ -67,7 +67,7 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
     ROS_INFO("average time = %fms",total_time/total_times);
     //发布PCLpointcloud2格式的点云
     sensor_msgs::PointCloud2 output;
-    pcl::toPCLPointCloud2 (*pcl_cloud_dense, *cloud_filtered);
+    //pcl::toPCLPointCloud2 (*pcl_cloud_dense, *cloud_filtered);
     pcl_conversions::fromPCL(*cloud_filtered, output);
     output.header.frame_id = "vehicle_link";
     // Publish the data
@@ -110,7 +110,7 @@ int main (int argc, char** argv)
     ros::NodeHandle nh;
 
     // Create a ROS subscriber for the input point cloud
-    ros::Subscriber sub = nh.subscribe<sensor_msgs::PointCloud2> ("/sensor/lidar16/top/pointcloud", 1, cloud_cb);
+    ros::Subscriber sub = nh.subscribe<sensor_msgs::PointCloud2> ("/velodyne_points", 1, cloud_cb);
 
     // Create a ROS publisher for the output point cloud
     pub = nh.advertise<sensor_msgs::PointCloud2> ("filtered_points", 1);
