@@ -506,6 +506,19 @@ rosgraph_msgs_generate_messages_py/fast:
 .PHONY : rosgraph_msgs_generate_messages_py/fast
 
 #=============================================================================
+# Target rules for targets named grip_map_node
+
+# Build rule for target.
+grip_map_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 grip_map_node
+.PHONY : grip_map_node
+
+# fast build rule for target.
+grip_map_node/fast:
+	$(MAKE) -f lidarslam/CMakeFiles/grip_map_node.dir/build.make lidarslam/CMakeFiles/grip_map_node.dir/build
+.PHONY : grip_map_node/fast
+
+#=============================================================================
 # Target rules for targets named lidarslam_node
 
 # Build rule for target.
@@ -1402,6 +1415,7 @@ help:
 	@echo "... rosgraph_msgs_generate_messages_lisp"
 	@echo "... roscpp_generate_messages_lisp"
 	@echo "... rosgraph_msgs_generate_messages_py"
+	@echo "... grip_map_node"
 	@echo "... lidarslam_node"
 	@echo "... kdtree"
 	@echo "... point_cloud_utils"

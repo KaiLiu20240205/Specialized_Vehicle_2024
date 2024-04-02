@@ -49,7 +49,7 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
         Eigen::Vector4f estimated_plane_coeffs;
         if(FitPlane(points,estimated_plane_coeffs)){
         } else {
-            std::cout<< "plane fitting failed"<<std::endl;
+            //std::cout<< "plane fitting failed"<<std::endl;
         }
     });
     // 将PCL的PointCloud2转化为PCL的PointXYZI

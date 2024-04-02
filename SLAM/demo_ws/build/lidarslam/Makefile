@@ -80,18 +80,6 @@ install/local/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
 # Special rule for the target list_install_components
 list_install_components:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
@@ -112,6 +100,18 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -166,6 +166,21 @@ preinstall/fast:
 depend:
 	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+# Convenience name for target.
+lidarslam/CMakeFiles/grip_map_node.dir/rule:
+	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build && $(MAKE) -f CMakeFiles/Makefile2 lidarslam/CMakeFiles/grip_map_node.dir/rule
+.PHONY : lidarslam/CMakeFiles/grip_map_node.dir/rule
+
+# Convenience name for target.
+grip_map_node: lidarslam/CMakeFiles/grip_map_node.dir/rule
+
+.PHONY : grip_map_node
+
+# fast build rule for target.
+grip_map_node/fast:
+	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build && $(MAKE) -f lidarslam/CMakeFiles/grip_map_node.dir/build.make lidarslam/CMakeFiles/grip_map_node.dir/build
+.PHONY : grip_map_node/fast
 
 # Convenience name for target.
 lidarslam/CMakeFiles/lidarslam_node.dir/rule:
@@ -1238,6 +1253,33 @@ src/lidarslam_node.cpp.s:
 	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build && $(MAKE) -f lidarslam/CMakeFiles/lidarslam_node.dir/build.make lidarslam/CMakeFiles/lidarslam_node.dir/src/lidarslam_node.cpp.s
 .PHONY : src/lidarslam_node.cpp.s
 
+src/sub_pointcloud.o: src/sub_pointcloud.cpp.o
+
+.PHONY : src/sub_pointcloud.o
+
+# target to build an object file
+src/sub_pointcloud.cpp.o:
+	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build && $(MAKE) -f lidarslam/CMakeFiles/grip_map_node.dir/build.make lidarslam/CMakeFiles/grip_map_node.dir/src/sub_pointcloud.cpp.o
+.PHONY : src/sub_pointcloud.cpp.o
+
+src/sub_pointcloud.i: src/sub_pointcloud.cpp.i
+
+.PHONY : src/sub_pointcloud.i
+
+# target to preprocess a source file
+src/sub_pointcloud.cpp.i:
+	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build && $(MAKE) -f lidarslam/CMakeFiles/grip_map_node.dir/build.make lidarslam/CMakeFiles/grip_map_node.dir/src/sub_pointcloud.cpp.i
+.PHONY : src/sub_pointcloud.cpp.i
+
+src/sub_pointcloud.s: src/sub_pointcloud.cpp.s
+
+.PHONY : src/sub_pointcloud.s
+
+# target to generate assembly for a file
+src/sub_pointcloud.cpp.s:
+	cd /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/build && $(MAKE) -f lidarslam/CMakeFiles/grip_map_node.dir/build.make lidarslam/CMakeFiles/grip_map_node.dir/src/sub_pointcloud.cpp.s
+.PHONY : src/sub_pointcloud.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1246,9 +1288,10 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... install/local"
-	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... install"
+	@echo "... grip_map_node"
 	@echo "... lidarslam_node"
 	@echo "... kdtree"
 	@echo "... point_cloud_utils"
@@ -1326,6 +1369,9 @@ help:
 	@echo "... src/lidarslam_node.o"
 	@echo "... src/lidarslam_node.i"
 	@echo "... src/lidarslam_node.s"
+	@echo "... src/sub_pointcloud.o"
+	@echo "... src/sub_pointcloud.i"
+	@echo "... src/sub_pointcloud.s"
 .PHONY : help
 
 
