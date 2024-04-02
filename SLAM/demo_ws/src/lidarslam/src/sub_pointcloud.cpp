@@ -282,21 +282,6 @@ void convertPointCloudToOccupancyGridMap(pcl::PointCloud<pcl::PointXYZ>::Ptr poi
         int angle_axle = std::floor((atan2(point.x,point.y)+M_PI)/angle_radians);
         double range2 = std::pow(point.x,2)+std::pow(point.y,2);
         ranges[angle_axle] = std::min(ranges[angle_axle],range2);
-        
-        // // 将所需要的点云控制在珊格之中，栅格设置为占用状态
-        // if (grid_x >= 0 && grid_x < map_size_x && grid_y >= 0 && grid_y < map_size_y) {
-        //     occupancy_grid_map[grid_x][grid_y] = true;
-        //     // 对每一个被占用的珊格，需要进行扩大运算，这里先简化，后续根据不同z轴作不同区分
-        //     int neTobeOcGd_nums = std::ceil(expansion_radius/map_resolution); //确定某个被占用珊格周围多少个珊格要被占用
-        //     // 将这个被占用珊格以其为中心，周围neTobeOcGd_numsxneTobeOcGd_nums都被占用
-        //     for(int i = grid_x - neTobeOcGd_nums; i <= grid_x + neTobeOcGd_nums; i++)
-        //     {
-        //         for(int j = grid_y - neTobeOcGd_nums; j <= grid_y + neTobeOcGd_nums; j++ )
-        //         {
-        //             occupancy_grid_map[grid_x][grid_y] = true;
-        //         }
-        //     }
-        // }
     }
 
     //遍历栅格地图中的每一个格子
