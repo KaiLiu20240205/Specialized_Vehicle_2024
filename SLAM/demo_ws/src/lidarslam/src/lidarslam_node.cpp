@@ -7,7 +7,8 @@ ros::Publisher pub;
 double total_time(0);
 int total_times(0);
 pcl::PointCloud<pcl::PointXYZI>::Ptr pcl_cloud_dense(new pcl::PointCloud<pcl::PointXYZI>);
-KDtree cloud_old;
+KdTree cloud_old;
+
 
 void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
 {
@@ -58,7 +59,7 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
     // 去除无效点
     std::vector<int> indices;
     pcl::removeNaNFromPointCloud(*pcl_cloud, *pcl_cloud_dense, indices);
-    //建立KDtree
+    //建立KdTree
     cloud_old.BuildTree(pcl_cloud_dense);    
     
     auto t2 = std::chrono::high_resolution_clock::now();
@@ -77,34 +78,7 @@ void cloud_cb (const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
 int main (int argc, char** argv)
 {
 
-    Eigen::Vector4f true_plane_coeffs(0.1, 0.2, 0.3, 0.4);
-    true_plane_coeffs.normalize();
-
-    std::vector<Eigen::Vector3f> points;
-
-    // 随机生成仿真平面点
-    cv::RNG rng;
-    // 先生成一个随机点，计算第四维，增加噪声，再归一化
-    for(int i=0;i<5;i++){
-    Eigen::Vector3f p(rng.uniform(0.0, 1.0), rng.uniform(0.0, 1.0), rng.uniform(0.0, 1.0));
-    float n4 = -p.dot(true_plane_coeffs.head<3>()) / true_plane_coeffs[3];
-    p = p / (n4 + std::numeric_limits<double>::min());  // 防止除零
-    p += Eigen::Vector3f(rng.gaussian(0.01), rng.gaussian(0.01), rng.gaussian(0.01));
-
-    points.emplace_back(p);
-    
-    // 验证在平面上
-    std::cout <<"res of p: " << p.dot(true_plane_coeffs.head<3>()) + true_plane_coeffs[3]<<std::endl;
-    }
-    
-    Eigen::Vector4f estimated_plane_coeffs;
-    if (FitPlane(points, estimated_plane_coeffs)) {
-        std::cout << "estimated coeffs: " << estimated_plane_coeffs.transpose()
-                  << ", true: " << true_plane_coeffs.transpose()<<std::endl;
-    } else {
-        std::cout<< "plane fitting failed"<<std::endl;
-    }
-
+    cloud_old.SetEnableANN();
     // Initialize ROS
     ros::init (argc, argv, "my_pcl_tutorial");
     ros::NodeHandle nh;

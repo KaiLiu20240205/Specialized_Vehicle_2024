@@ -4,8 +4,10 @@
 
 #### 2.点云格式转化与处理 <https://blog.csdn.net/luyuhangGray/article/details/122634340> <https://blog.csdn.net/qq_42367689/article/details/104358046>
 
+#### 3.安装Eigen、fmt和Sophus <https://blog.csdn.net/caiqidong321/article/details/128916566>
 
 #### 1.Github注册——URL <https://github.com>
+
 
 #### 2.Github安装
 

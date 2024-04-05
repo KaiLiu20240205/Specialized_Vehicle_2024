@@ -206,6 +206,7 @@ lidarslam_node_EXTERNAL_OBJECTS =
 /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_superres.so.3.4.16
 /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_videostab.so.3.4.16
 /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_viz.so.3.4.16
+/home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libfmt.a
 /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_calib3d.so.3.4.16
 /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_features2d.so.3.4.16
 /home/fengcong/Specialized_Vehicle_2024/SLAM/demo_ws/devel/lib/lidarslam/lidarslam_node: /usr/local/lib/libopencv_flann.so.3.4.16

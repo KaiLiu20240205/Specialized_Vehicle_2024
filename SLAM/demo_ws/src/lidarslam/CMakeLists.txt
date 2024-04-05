@@ -8,6 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_BUILD_TYPE "Release")
+set(Sophus_DIR /usr/local/share/sophus/cmake/)
 
 set(OpenCV_DIR /usr/local/share/OpenCV/)
 
@@ -22,6 +23,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   OpenCV
+  Sophus
 )
 
 ## System dependencies are found with CMake's conventions
@@ -130,6 +132,7 @@ include_directories(
 # include
   src/common
   ${catkin_INCLUDE_DIRS}
+  ${Sophus_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -166,6 +169,7 @@ add_executable(grip_map_node src/sub_pointcloud.cpp)
 ## Specify libraries to link a library or executable target against
 target_link_libraries(point_cloud_utils
   ${catkin_LIBRARIES}
+  fmt::fmt
 )
 target_link_libraries(kdtree
   ${catkin_LIBRARIES}

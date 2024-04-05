@@ -1,8 +1,7 @@
 #include "kdtree.h"
-#include "point_cloud_utils.h"
 #include <vector>
 
-bool KDtree::BuildTree(const pcl::PointCloud<pcl::PointXYZI>::Ptr& cloud)
+bool KdTree::BuildTree(const pcl::PointCloud<pcl::PointXYZI>::Ptr& cloud)
 {
     
     if (cloud->empty()) {
@@ -22,7 +21,7 @@ bool KDtree::BuildTree(const pcl::PointCloud<pcl::PointXYZI>::Ptr& cloud)
     return true;
 }
 
-void KDtree::Clear()
+void KdTree::Clear()
 {
     for (const auto &np : nodes_) {
         if (np.second != root_.get() && np.second != nullptr) {
@@ -34,7 +33,7 @@ void KDtree::Clear()
     tree_node_id_ = 0;
 }
 
-void KDtree::Insert(const std::vector<int> &points, KdTreeNode *node)
+void KdTree::Insert(const std::vector<int> &points, KdTreeNode *node)
 {
     nodes_.insert({node->id_, node});
     if (points.empty()) {
@@ -67,7 +66,7 @@ void KDtree::Insert(const std::vector<int> &points, KdTreeNode *node)
     create_if_not_empty(node->right_, right);
 }
 
-bool KDtree::GetClosestPoint(const pcl::PointXYZI &pt, std::vector<int> &closest_idx, int k)
+bool KdTree::GetClosestPoint(const pcl::PointXYZI &pt, std::vector<int> &closest_idx, int k)
 {
     if(k > size_){
         ROS_INFO("cannot set k=%d larger than cloud size: %d",k,size_);
@@ -90,7 +89,7 @@ bool KDtree::GetClosestPoint(const pcl::PointXYZI &pt, std::vector<int> &closest
     return true;
 }
 
-bool KDtree::GetClosestPointMT(const pcl::PointCloud<pcl::PointXYZI>::Ptr &cloud, std::vector<std::pair<size_t, size_t>> &matches, int k) {
+bool KdTree::GetClosestPointMT(const pcl::PointCloud<pcl::PointXYZI>::Ptr &cloud, std::vector<std::pair<size_t, size_t>> &matches, int k) {
     
     matches.resize(cloud->size() * k);
 
@@ -116,35 +115,7 @@ bool KDtree::GetClosestPointMT(const pcl::PointCloud<pcl::PointXYZI>::Ptr &cloud
     return true;
 }
 
-bool KDtree::GetClosestPointPlaneMT(const pcl::PointCloud<pcl::PointXYZI>::Ptr &cloud, int k) {
-
-
-    // 索引
-    std::vector<int> index(cloud->size());
-    for (int i = 0; i < cloud->points.size(); ++i) {
-        index[i] = i;
-    }
-
-    std::for_each(std::execution::par_unseq, index.begin(), index.end(), [this, &cloud, &k](int idx) {
-        std::vector<int> closest_idx;
-        GetClosestPoint(cloud->points[idx], closest_idx, k);
-        std::vector<Eigen::Vector3f> points;
-        for (int i=0;i<k;i++){
-            points.emplace_back(cloud_->points[closest_idx[i]].getArray3fMap());
-        }
-        Eigen::Vector4f estimated_plane_coeffs;
-        if(FitPlane(points,estimated_plane_coeffs)){
-        } else {
-            std::cout<< "plane fitting failed"<<std::endl;
-        }
-
-
-    });
-
-    return true;
-}
-
-bool KDtree::FindSplitAxisAndThresh(const std::vector<int> &point_idx, int &axis, float &th, std::vector<int> &left, std::vector<int> &right)
+bool KdTree::FindSplitAxisAndThresh(const std::vector<int> &point_idx, int &axis, float &th, std::vector<int> &left, std::vector<int> &right)
 {
     Eigen::Vector3f var;
     Eigen::Vector3f mean;
@@ -175,7 +146,7 @@ bool KDtree::FindSplitAxisAndThresh(const std::vector<int> &point_idx, int &axis
     
 }
 
-void KDtree::Knn(const Eigen::Vector3f &pt, KdTreeNode *node, std::priority_queue<NodeAndDistance> &knn_result) const
+void KdTree::Knn(const Eigen::Vector3f &pt, KdTreeNode *node, std::priority_queue<NodeAndDistance> &knn_result) const
 {
     if (node->IsLeaf()) {
         // 如果是叶子，检查叶子是否能插入
@@ -200,7 +171,7 @@ void KDtree::Knn(const Eigen::Vector3f &pt, KdTreeNode *node, std::priority_queu
     }
 }
 
-void KDtree::ComputeDisForLeaf(const Eigen::Vector3f &pt, KdTreeNode *node, std::priority_queue<NodeAndDistance> &knn_result) const
+void KdTree::ComputeDisForLeaf(const Eigen::Vector3f &pt, KdTreeNode *node, std::priority_queue<NodeAndDistance> &knn_result) const
 {
     // 比较与结果队列的差异，如果优于最远距离，则插入
     float dis2 = Dis2(pt, cloud_->points[node->point_idx_].getVector3fMap());
@@ -216,21 +187,21 @@ void KDtree::ComputeDisForLeaf(const Eigen::Vector3f &pt, KdTreeNode *node, std:
     }
 }
 
-bool KDtree::NeedExpand(const Eigen::Vector3f &pt, KdTreeNode *node, std::priority_queue<NodeAndDistance> &knn_result) const
+bool KdTree::NeedExpand(const Eigen::Vector3f &pt, KdTreeNode *node, std::priority_queue<NodeAndDistance> &knn_result) const
 {
     if (knn_result.size() < k_) {
         return true;
     }
     // 检测切面距离，看是否有比现在更小的
     float d = pt[node->axis_index_] - node->split_thresh_;
-    if ((d * d) < knn_result.top().distance2_) {
+    if ((d * d) < knn_result.top().distance2_ * alpha_) {
         return true;
     } else {
         return false;
     }
 }
 
-void KDtree::PrintAll() {
+void KdTree::PrintAll() {
     for (const auto &np : nodes_) {
         auto node = np.second;
         if (node->left_ == nullptr && node->right_ == nullptr) {
